@@ -1,46 +1,57 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define EPSILON 0.001
+#define EPSILON 0.0001
+#define steps 0.5
+
+double a, b, c, d, e;
 double func(double x)
 {
-    return x * x * x - 2 * x * x + 3 * x + 4;
+    return a * x * x * x * x + b * x * x * x + c * x * x + d * x + e;
 }
-
-double bisection(double a, double b)
+double bisection(double x1, double x2, int &iteration)
 {
-    if (func(a) * func(b) >= 0)
+    iteration = 0;
+    while (abs(func(x1) - func(x2)) >= EPSILON)
     {
-        cout << "Guesses are not perfect.";
-        return -1;
-    }
-
-    else
-    {
-        double c = a;
-        while (abs(a - b)/ abs(b) >= EPSILON)
+        double x0 = (x1 + x2) / 2;
+        iteration++;
+        if (abs(func(x0)) < EPSILON)
         {
-            c = (a + b) / 2;
-
-            if (abs(func(c)) < EPSILON)
-            {
-                return c;
-            }
-            else if (func(c) * func(a) < 0)
-            {
-                b = c;
-            }
-            else
-            {
-                a = c;
-            }
+            return x0;
         }
-        return c;
+        else if (func(x1) * func(x0) < 0)
+        {
+            x2 = x0;
+        }
+        else
+        {
+            x1 = x0;
+        }
     }
+    return (x1 + x2) / 2;
 }
 
 int main()
 {
-    double a = -2, b = 0.5;
-    cout << bisection(a, b) << endl;
-    return 0;
+    cin >> a >> b >> c >> d >> e;
+    double xmax = sqrt(pow((b / a), 2) - 2 * (c / a));
+    double x1 = -xmax;
+    double x2 = x1 + steps;
+    int rootCount = 0;
+
+    while (x2 < xmax)
+    {
+        if (func(x1) * func(x2) < 0)
+        {
+            int iteration;
+            rootCount++;
+            double root = bisection(x1, x2, iteration);
+            cout << rootCount << " root : " << root << endl;
+            cout << "Search interval of " << rootCount << " root : " << "[" << x1 << "," << x2 << "]" << endl;
+            cout << "Iteration needed for " << rootCount << " root : " << iteration << endl;
+        }
+
+        x1 += steps;
+        x2 += steps;
+    }
 }

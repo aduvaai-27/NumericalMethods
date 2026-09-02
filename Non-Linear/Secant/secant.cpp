@@ -45,6 +45,12 @@ int main()
         cin >> a[i];
     }
 
+    for(int i=0; i<n; i++)
+    {
+        cout<<a[i]<<"x^"<<n-i<<"  +  "<<" ";
+    }
+    cout<<a[n]<<endl;
+
     // range
     double max = 0;
     for (int i = 1; i <= n; i++)
@@ -69,11 +75,11 @@ int main()
             double root = secant(x1, x2, iteration);
 
             cout << "Root Count : " << rootCount << endl;
-            ;
+
             cout << "Root : " << root << endl;
-            ;
+
             cout << "Interval : " << "[" << x1 << "," << x2 << "]" << endl;
-            ;
+
             cout << "Iteration : " << iteration;
             cout << endl;
         }
@@ -82,9 +88,9 @@ int main()
             rootCount++;
 
             cout << "Root Count : " << rootCount << endl;
-            ;
+
             cout << "Root : " << x1 << endl;
-            ;
+
             cout << "Interval : " << "[" << x1 << "," << x2 << "]" << endl;
             cout << "Iteration : 0";
             cout << endl;
@@ -100,6 +106,7 @@ Number of the degree of the Equation : 4
 Coefficient of the Euqation : 1 0 -5 0 4
 
 OUTPUT:
+1x^4  +   0x^3  +   -5x^2  +   0x^1  +   4
 Root Count : 1
 Root : -2
 Interval : [-2,-1.5]

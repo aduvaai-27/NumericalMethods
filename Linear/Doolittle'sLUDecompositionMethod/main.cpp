@@ -1,109 +1,148 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-int MAX = 20;
 int main()
 {
-    double A[MAX][MAX], U[MAX][MAX], L[MAX][MAX];
-    double B[MAX], X[MAX], Z[MAX];
-
-    int n;
-    cout << "Number of Equation : ";
-    cin >> n;
-
-    // INPUT
-    cout << "Enter the augmented matrix : " << endl;
-    for (int i = 0; i < n; i++)
+    char ch;
+    do
     {
-        for (int j = 0; j < n; j++)
+        int n;
+        cin>>n;
+        double A[n][n],L[n][n],U[n][n];
+        double B[n],X[n],Z[n];
+        for(int i=0; i<n; i++)
         {
-            cin >> A[i][j];
-        }
-        cin >> B[i];
-    }
-
-    // Initialize L and U
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            L[i][j] = 0;
-            U[i][j] = 0;
-        }
-        L[i][i] = 1;
-    }
-
-    // decompose
-    for (int i = 0; i < n; i++)
-    {
-
-        for (int j = i; j < n; j++)
-        {
-            double sum = 0;
-            for (int k = 0; k < n; k++)
+            for(int j=0; j<n; j++)
             {
-                sum += L[i][k] * U[k][j];
+                cin>>A[i][j];
             }
-            U[i][j] = A[i][j] - sum;
+            cin>>B[i];
         }
-
-        for (int j = i + 1; j < n; j++)
+        for(int i=0; i<n; i++)
         {
-            double sum = 0;
-            for (int k = 0; k < i; k++)
+            for(int j=0; j<n; j++)
             {
-                sum += L[j][k] * U[k][i];
+                L[i][j]=0;
+                U[i][j]=0;
             }
-            L[j][i] = (A[j][i] - sum) / U[i][i];
+            L[i][i]=1;
         }
-    }
 
-    // Print L:
-    cout << "L : " << endl;
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
+        for(int i=0; i<n; i++)
         {
-            cout << L[i][j] << "\t";
-        }
-        cout << endl;
-    }
-    // print U :
-    cout << "U : " << endl;
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            cout << U[i][j] << "\t";
-        }
-        cout << endl;
-    }
+            for(int j=i; j<n; j++)
+            {
+                double sum=0;
+                for(int k=0; k<i; k++)
+                {
+                    sum+=L[i][k]*U[k][j];
+                }
+                U[i][j]=A[i][j]-sum;
+            }
 
-    // forward substitution:
-    for (int i = 0; i < n; i++)
-    {
-        double sum = 0;
-        for (int k = 0; k < i; k++)
-        {
-            sum += L[i][k] * Z[k];
-        }
-        Z[i] = B[i] - sum;
-    }
+            for(int j=i+1; j<n; j++)
+            {
+                double sum=0;
+                for(int k=0; k<i; k++)
+                {
+                    sum+=L[j][k]*U[k][i];
+                }
+                L[j][i]=(A[j][i]-sum)/U[i][i];
+            }
 
-    // backword substitution:
-    for (int i = n - 1; i >= 0; i--)
-    {
-        double sum = 0;
-        for (int k = i + 1; k < n; k++)
-        {
-            sum += U[i][k] * X[k];
         }
-        X[i] = (Z[i] - sum) / U[i][i];
-    }
+        cout<<"L :"<<endl;
 
-    // output
-    cout << "Solution : " << endl;
-    for (int i = 0; i < n; i++)
-    {
-        cout << "x" << i + 1 << " : " << X[i] << endl;
+        for(int i=0; i<n; i++)
+        {
+            for(int j=0; j<n; j++)
+            {
+                cout<<L[i][j]<<"\t";
+            }
+            cout<<endl;
+        }
+
+        cout<<"U :"<<endl;
+
+        for(int i=0; i<n; i++)
+        {
+            for(int j=0; j<n; j++)
+            {
+                cout<<U[i][j]<<"\t";
+            }
+            cout<<endl;
+        }
+        //forward
+        for(int i=0; i<n; i++)
+        {
+            double sum=0;
+            for(int j=0; j<i; j++)
+            {
+                sum+=L[i][j]*Z[j];
+
+            }
+            Z[i]=B[i]-sum;
+        }
+
+
+        int test=1;
+        for(int i=0; i<n; i++)
+        {
+            bool rowZero=true;
+            for(int j=0; j<n; j++)
+            {
+                if(fabs(U[i][j])>0.00001)
+                {
+                    rowZero=false;
+                }
+            }
+
+            if(rowZero && fabs(Z[i])>0.00001)
+            {
+                test=0;
+                break;
+            }
+            else if (rowZero)
+            {
+                test=2;
+
+            }
+        }
+
+        if(test==0)
+        {
+            cout<<"There is no solution . "<<endl;
+
+        }
+        else if(test == 2)
+        {
+            cout<<"There is infinity solution."<<endl;
+        }
+        else
+        {
+
+            //backward
+            for(int i=n-1; i>=0; i--)
+            {
+                double sum=0;
+                for(int j=i+1; j<n; j++)
+                {
+                    sum+=U[i][j]*X[j];
+                }
+                X[i]=(Z[i]-sum)/U[i][i];
+            }
+
+            for(int i=0; i<n; i++)
+            {
+                cout<<"X"<<i+1<<" = "<<X[i]<<endl;
+            }
+        }
+
+        cout<<"Do you want to continue?"<<endl;
+        cin>>ch;
+
+
     }
+    while(ch=='y' || ch=='Y');
+
+
 }

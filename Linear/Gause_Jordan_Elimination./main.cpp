@@ -86,3 +86,38 @@ int main()
         }
     }
 }
+
+/*
+test case 1
+3
+2 1 -1 8
+-3 -1 2 -11
+-2 1 2 -3
+Reduced Echelon Form :
+     1.000     0.000    -1.000     3.000
+     0.000     1.000     1.000     2.000
+     0.000     0.000    -1.000     1.000
+Unique Solution
+X1 = 3
+X2 = 2
+X3 = 1
+
+test case 2
+2
+1 1 3
+1 1 5
+Reduced Echelon Form :
+     1.000     1.000     3.000
+     0.000     0.000     2.000
+No solution
+
+test case 3
+2
+1 1 3
+2 2 6
+Reduced Echelon Form :
+     1.000     1.000     3.000
+     0.000     0.000     0.000
+Infinity Solution
+
+*/

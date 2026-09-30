@@ -71,6 +71,22 @@ int main()
     cout<<"Error in solution 1"<<fabs(new_s1-s1)<<endl;
     cout<<"Error in solution 2"<<fabs(new_s2-s2)<<endl;
 
+    cout<<"Polynomial : "<<endl;
+    cout<<"y = "<<diff[0][0];
+    for(int i=0; i<n; i++)
+    {
+        cout<<" + "<<diff[0][i]<<"/"<<i<<"!";
+        cout<<" *u";
+        for(int j=0; j<i; j++)
+        {
+            cout<<"(u-"<<j<<")";
+
+        }
+    }
+    cout<<endl;
+    cout<<"u = ( x - "<<x[0]<< " ) /"<<h<<endl;
+
+
 
 }
 

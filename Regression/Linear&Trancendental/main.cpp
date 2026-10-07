@@ -63,6 +63,7 @@ int main()
         cout<<"Equation P = "<<a<<"e^("<<b<<"t)"<<endl;
 
     }
+    //T = a + b*f(x)\n , f(x)=e*(x/4)
 
     else if(choice == 3)
     {
